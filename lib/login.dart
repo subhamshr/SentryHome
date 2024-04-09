@@ -56,7 +56,7 @@ class _MyLoginState extends State<MyLogin> {
                     Row(
                       children: [
                         Text(
-                          'Sign In',
+                          'Sign In!',
                           style: TextStyle(
                               fontSize: 27, fontWeight: FontWeight.w700),
                         )
