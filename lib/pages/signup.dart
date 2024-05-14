@@ -1,6 +1,8 @@
-import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:sentryhome/services/firestore.dart";
+import "package:firebase_auth/firebase_auth.dart";
+
+import "../helper/helper_functions.dart";
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -18,6 +20,38 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPWController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+
+  void signupUser(BuildContext context) async {
+    // show  loading circle
+    showDialog(
+        context: context,
+        builder: (context) => const Center(
+              child: CircularProgressIndicator(),
+            ));
+    // make sure the passwords match
+    if (passwordController.text != confirmPWController.text) {
+      // pop the loading circle
+      Navigator.pop(context);
+      // show error msg
+      displayMessageToUser("Passwords dont match", context);
+    }
+    // creating the user
+    else {
+      try {
+        UserCredential? userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+                email: emailController.text, password: passwordController.text);
+
+        // pop loading circle
+        if (context.mounted) Navigator.pop(context);
+      } on FirebaseAuthException catch (e) {
+        // pop loading circle
+        if (context.mounted) Navigator.pop(context);
+        // display error msg
+        if (context.mounted) displayMessageToUser(e.code, context);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +147,7 @@ class _SignupPageState extends State<SignupPage> {
             Container(
                 padding: const EdgeInsets.only(top: 3, left: 3),
                 child: ElevatedButton(
-                  onPressed: () => {},
+                  onPressed: () => signupUser(context),
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -148,10 +182,10 @@ class _SignupPageState extends State<SignupPage> {
                       height: 30.0,
                       width: 30.0,
                       decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                                'assets/images/login_signup/google.png'),
-                            fit: BoxFit.cover),
+                        // image: DecorationImage(
+                        //     image: AssetImage(
+                        //         'assets/images/login_signup/google.png'),
+                        //     fit: BoxFit.cover),
                         shape: BoxShape.circle,
                       ),
                     ),

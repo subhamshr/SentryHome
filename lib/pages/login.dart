@@ -1,6 +1,9 @@
-import "package:cloud_firestore/cloud_firestore.dart";
+// import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:sentryhome/services/firestore.dart";
+import "package:firebase_auth/firebase_auth.dart";
+
+import "../helper/helper_functions.dart";
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,6 +13,43 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // firestore
+  final FirestoreService firestoreService = FirestoreService();
+
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+
+  void loginUser(BuildContext context) async {
+    // show  loading circle
+    showDialog(
+        context: context,
+        builder: (context) => const Center(
+              child: CircularProgressIndicator(),
+            ));
+    // make sure the passwords match
+    // if (passwordController.text != confirmPWController.text) {
+    //   // pop the loading circle
+    //   Navigator.pop(context);
+    //   // show error msg
+    //   displayMessageToUser("Passwords dont match", context);
+    // }
+    // // creating the user
+    // else {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text, password: passwordController.text);
+
+      // pop loading circle
+      if (context.mounted) Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      // pop loading circle
+      if (context.mounted) Navigator.pop(context);
+      // display error msg
+      if (context.mounted) displayMessageToUser(e.code, context);
+    }
+    // }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -52,17 +92,19 @@ class _LoginPageState extends State<LoginPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TextField(
+          controller: emailController,
           decoration: InputDecoration(
-              hintText: "Username",
+              hintText: "Email",
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
                   borderSide: BorderSide.none),
               fillColor: const Color.fromRGBO(160, 160, 160, 0.7),
               filled: true,
-              prefixIcon: const Icon(Icons.person)),
+              prefixIcon: const Icon(Icons.email)),
         ),
         const SizedBox(height: 10),
         TextField(
+          controller: passwordController,
           decoration: InputDecoration(
             hintText: "Password",
             border: OutlineInputBorder(
@@ -76,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         const SizedBox(height: 10),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () => loginUser(context),
           style: ElevatedButton.styleFrom(
             shape: const StadiumBorder(),
             padding: const EdgeInsets.symmetric(vertical: 16),
