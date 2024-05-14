@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,8 +19,13 @@ class MyApp extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Login & Signup'),
+            title: const Text(
+              'SentryHome',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+            ),
             bottom: const TabBar(
+              indicatorColor: Colors.black,
+              labelColor: Colors.black,
               tabs: [
                 Tab(text: 'Login'),
                 Tab(text: 'Signup'),
@@ -44,8 +52,9 @@ class LoginPage extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
-          margin: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -67,7 +76,10 @@ class LoginPage extends StatelessWidget {
           "Welcome Back",
           style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
         ),
-        Text("Enter your credential to login"),
+        Text(
+          "Enter your credential to login",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ],
     );
   }
@@ -82,7 +94,7 @@ class LoginPage extends StatelessWidget {
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
                   borderSide: BorderSide.none),
-              fillColor: Colors.purple.withOpacity(0.1),
+              fillColor: const Color.fromRGBO(160, 160, 160, 0.7),
               filled: true,
               prefixIcon: const Icon(Icons.person)),
         ),
@@ -93,7 +105,7 @@ class LoginPage extends StatelessWidget {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(18),
                 borderSide: BorderSide.none),
-            fillColor: Colors.purple.withOpacity(0.1),
+            fillColor: const Color.fromRGBO(160, 160, 160, 0.7),
             filled: true,
             prefixIcon: const Icon(Icons.password),
           ),
@@ -105,11 +117,12 @@ class LoginPage extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             shape: const StadiumBorder(),
             padding: const EdgeInsets.symmetric(vertical: 16),
-            backgroundColor: Colors.purple,
+            backgroundColor: const Color.fromRGBO(79, 79, 79, 0.7),
           ),
           child: const Text(
             "Login",
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(
+                fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
           ),
         )
       ],
@@ -121,7 +134,7 @@ class LoginPage extends StatelessWidget {
       onPressed: () {},
       child: const Text(
         "Forgot password?",
-        style: TextStyle(color: Colors.purple),
+        style: TextStyle(color: Colors.black),
       ),
     );
   }
@@ -135,7 +148,8 @@ class LoginPage extends StatelessWidget {
             onPressed: () {},
             child: const Text(
               "Sign Up",
-              style: TextStyle(color: Colors.purple),
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ))
       ],
     );
@@ -159,22 +173,25 @@ class SignupPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Column(
+                const Column(
                   children: <Widget>[
-                    const SizedBox(height: 60.0),
-                    const Text(
+                    SizedBox(height: 30.0),
+                    Text(
                       "Sign up",
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 10,
                     ),
                     Text(
-                      "Create your account",
-                      style: TextStyle(fontSize: 15, color: Colors.grey[700]),
+                      "Sign Up as a New User",
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
@@ -186,7 +203,7 @@ class SignupPage extends StatelessWidget {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(18),
                               borderSide: BorderSide.none),
-                          fillColor: Colors.purple.withOpacity(0.1),
+                          fillColor: const Color.fromRGBO(160, 160, 160, 0.7),
                           filled: true,
                           prefixIcon: const Icon(Icons.person)),
                     ),
@@ -197,7 +214,7 @@ class SignupPage extends StatelessWidget {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(18),
                               borderSide: BorderSide.none),
-                          fillColor: Colors.purple.withOpacity(0.1),
+                          fillColor: const Color.fromRGBO(160, 160, 160, 0.7),
                           filled: true,
                           prefixIcon: const Icon(Icons.email)),
                     ),
@@ -208,7 +225,7 @@ class SignupPage extends StatelessWidget {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(18),
                             borderSide: BorderSide.none),
-                        fillColor: Colors.purple.withOpacity(0.1),
+                        fillColor: const Color.fromRGBO(160, 160, 160, 0.7),
                         filled: true,
                         prefixIcon: const Icon(Icons.password),
                       ),
@@ -221,7 +238,7 @@ class SignupPage extends StatelessWidget {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(18),
                             borderSide: BorderSide.none),
-                        fillColor: Colors.purple.withOpacity(0.1),
+                        fillColor: const Color.fromRGBO(160, 160, 160, 0.7),
                         filled: true,
                         prefixIcon: const Icon(Icons.password),
                       ),
@@ -233,14 +250,14 @@ class SignupPage extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 3, left: 3),
                     child: ElevatedButton(
                       onPressed: () {},
-                      child: Text(
-                        "Sign up",
-                        style: TextStyle(fontSize: 20),
-                      ),
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        backgroundColor: Colors.purple,
+                        backgroundColor: const Color.fromRGBO(79, 79, 79, 0.7),
+                      ),
+                      child: const Text(
+                        "Sign up",
+                        style: TextStyle(fontSize: 20, color: Colors.black),
                       ),
                     )),
                 const Center(child: Text("Or")),
@@ -248,9 +265,7 @@ class SignupPage extends StatelessWidget {
                   height: 45,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    border: Border.all(
-                      color: Colors.purple,
-                    ),
+                    border: Border.all(color: Colors.black),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.white.withOpacity(0.5),
@@ -282,7 +297,7 @@ class SignupPage extends StatelessWidget {
                           "Sign In with Google",
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.purple,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -296,8 +311,9 @@ class SignupPage extends StatelessWidget {
                     TextButton(
                         onPressed: () {},
                         child: const Text(
-                          "Login",
-                          style: TextStyle(color: Colors.purple),
+                          "Sign In",
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
                         ))
                   ],
                 )
